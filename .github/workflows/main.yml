@@ -11,21 +11,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout repo หลักของคุณ
       - uses: actions/checkout@v4
 
-      # โคลน CodeView โดยใช้ git clone เอง
       - name: Clone CodeView library
         run: |
           git clone https://github.com/tiagohm/CodeView.git codeview
+          ls -l
 
-      # ตั้งค่า JDK (ตัวอย่างนี้ใช้ JDK 17)
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      # รัน Gradle ด้วย bash
-      - name: Build with Gradle
-        run: cd ~/codeview && bash ./gradlew build
+      - name: Build CodeView
+        run: |
+          cd codeview
+          chmod +x ./gradlew
+          ./gradlew build
