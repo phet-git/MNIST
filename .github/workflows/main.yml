@@ -36,5 +36,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: CodeView-built-aar
-          path: ./CodeView-1.3.9/app/build/outputs/
-          run: | ls
+          path: ./CodeView-1.3.9/app/build/outputs
