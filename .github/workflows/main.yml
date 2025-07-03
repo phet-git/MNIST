@@ -1,4 +1,4 @@
-name: Java CI with Gradle
+name: Java CI (with git clone)
 
 on:
   push:
@@ -14,13 +14,10 @@ jobs:
       # Checkout repo หลักของคุณ
       - uses: actions/checkout@v4
 
-      # Checkout ไลบรารี CodeView เพิ่มเข้ามา (อยู่ในโฟลเดอร์ codeview)
-      - name: Checkout CodeView library
-        uses: actions/checkout@v4
-        with:
-          repository: tiagohm/CodeView
-          ref: master
-          path: codeview
+      # โคลน CodeView โดยใช้ git clone เอง
+      - name: Clone CodeView library
+        run: |
+          git clone https://github.com/tiagohm/CodeView.git codeview
 
       # ตั้งค่า JDK (ตัวอย่างนี้ใช้ JDK 17)
       - name: Set up JDK 17
@@ -29,6 +26,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # สั่ง build ด้วย Gradle (เปลี่ยนเป็น mvn ถ้าใช้ Maven)
+      # รัน Gradle ด้วย bash
       - name: Build with Gradle
-        run: ./gradlew build
+        run: bash ./gradlew build
