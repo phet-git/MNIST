@@ -1,6 +1,7 @@
-name: Java CI with JDK 11
+name: Build CodeView Library
 
 on:
+  workflow_dispatch:
   push:
     branches: [ main ]
   pull_request:
@@ -11,21 +12,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Clone CodeView library
-        run: |
-          git clone https://github.com/tiagohm/CodeView.git codeview
-          ls -l
+      - name: Checkout CodeView source
+        uses: actions/checkout@v4
+        with:
+          repository: AmrDeveloper/CodeView
+          ref: main
 
       - name: Set up JDK 11
         uses: actions/setup-java@v4
         with:
-          java-version: '8'
+          java-version: '11'
           distribution: 'temurin'
 
-      - name: Build CodeView
-        run: |
-          cd codeview
-          chmod +x ./gradlew
-          ./gradlew build
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Build CodeView library (AAR)
+        run: ./gradlew :codeview:assembleRelease
+
+      - name: Upload AAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: codeview-aar
+          path: codeview/build/outputs/aar/*.aar
