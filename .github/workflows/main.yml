@@ -24,4 +24,10 @@ jobs:
       - name: รัน Gradle build
         run: |
           cd CodeView-1.3.9
-          bash ./gradlew build
+          bash ./gradlew build 
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: CodeView-built-artifact
+          path: CodeView-1.3.9/build/libs/
