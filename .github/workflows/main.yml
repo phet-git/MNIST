@@ -28,4 +28,4 @@ jobs:
 
       # รัน Gradle ด้วย bash
       - name: Build with Gradle
-        run: cd ~/CodeView && bash ./gradlew build
+        run: cd ~/codeview && bash ./gradlew build
